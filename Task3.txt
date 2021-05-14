@@ -1,0 +1,21 @@
+Task3.txt
+
+
+In componentDidMount, we use web3 to get access to the metamask address and set this to the address of the contract we will work with.
+
+buyLoot lines:
+
+const { contract, accounts } = this.state;		// sets the valuables contract and accounts to the corresponding values of the App
+
+ev.preventDefault();					// don't know?
+this.setState({ loading: true });			// sets the App's variable "loading" to true, saying that the app is loading
+contract.methods.buyToken(this.state.buying.id).send(	
+  { from: accounts[0], value: this.state.buying.price }	// invokes the ethereum contract to have the account in accounts buy at the given price
+).then(() => this.fetchLoot()).then(() => {		// fetches loot
+  this.setState({ buying: null });			// tries to set buying to null, saying that nothing is being bought
+}, (err) => {
+  console.error(err);
+  alert('Creating the token faile!');			// if it fails in the process, throw an error message
+  this.setState({ buying: null });
+})
+
